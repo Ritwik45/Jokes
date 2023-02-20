@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JokeAPI Example</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container"><h1>JokeAPI Example</h1>
+        <p id="joke"></p>
+        <button id="new-joke">New Joke</button>
+        
+    <script>
+        const API_KEY = "your-api-key-here";
+const jokeElement = document.getElementById("joke");
+const newJokeButton = document.getElementById("new-joke");
+
+async function fetchJoke() {
+  const response = await fetch(`https://v2.jokeapi.dev/joke/Any`, {
+    headers: {
+      "Accept": "application/json",
+      "User-Agent": "JokeAPI Example (https://example.com)",
+      "X-JokesOne-Api-Secret": API_KEY
+    }
+  });
+  const data = await response.json();
+  if (data.error) {
+    jokeElement.textContent = "Sorry, an error occurred. Please try again later.";
+  } else {
+    jokeElement.textContent = data.joke;
+  }
+}
+
+newJokeButton.addEventListener("click", async () => {
+  await fetchJoke();
+});
+
+    </script>
+  </body>
+</html>
